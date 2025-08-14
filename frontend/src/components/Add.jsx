@@ -1,104 +1,85 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
-import axios from 'axios'; 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const Add = () => { 
+const Add = () => {
   const [form, setForm] = useState({
     productTitle: '',
-    description: '',
-    status: '',
+    productDescription: '',
     imageUrl: '',
+    status: ''
   });
 
   const navigate = useNavigate();
 
-  // Function to handle changes in the form inputs
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setForm(prevForm => ({
-      ...prevForm,
-      [name]: value,
-    }));
-  }
-
-  // Function to handleform submit    
-  function handleSubmit(e) {
+  function submitform(e) {
     e.preventDefault();
-    axios.post("http://localhost:5173/products/add", form) /
-      .then(res => {
-        console.log('form submitted', form);
-        alert(res.data.message);
-        if (res.data.message === 'success') {
-          navigate('/home');
-        }
+
+    axios.post('http://localhost:5000/route/add', form)
+      .then((res) => {
+        console.log('Product added:', res.data);
+        alert('Product added successfully!');
+        navigate('/');
       })
       .catch((err) => {
         console.error(err);
-        alert("Error adding product or server error");
-    
+        alert('Failed to add product');
       });
   }
 
   return (
-    <div>
+    <div style={{ marginLeft: "400px", marginTop: "80px" }}>
+      <h2 style={{ marginLeft: "100px" }}>ADD PRODUCT</h2>
       <Box
         component="form"
-        onSubmit={handleSubmit} 
-        sx={{ '& > :not(style)': { m: 1, width: '25ch' } }}
+        onSubmit={submitform}
+        sx={{ '& > :not(style)': { m: 1, width: '50ch' } }}
         noValidate
         autoComplete="off"
-        border={2}
-        marginTop={4}
-        alignContent={"center"}
-        justifyContent={"center"}
-        width={300}
       >
-        <h1>Add Your Products</h1>
         <TextField
-          id="product-title"
           label="Product Title"
           variant="outlined"
-          name="productTitle"
+          type="text"
           value={form.productTitle}
-          onChange={handleChange}
-        />
+          onChange={(e) => setForm({ ...form, productTitle: e.target.value })}
+        /><br />
+
         <TextField
-          id="description"
-          label="Description"
+          label="Product Description"
           variant="outlined"
-          name="description"
-          value={form.description}
-          onChange={handleChange}
-        />
+          type="text"
+          value={form.productDescription}
+          onChange={(e) => setForm({ ...form, productDescription: e.target.value })}
+        /><br />
+
         <TextField
-          id="status"
           label="Status"
           variant="outlined"
-          name="status"
+          type="text"
           value={form.status}
-          onChange={handleChange}
-        />
+          onChange={(e) => setForm({ ...form, status: e.target.value })}
+        /><br />
+
         <TextField
-          id="image-url"
-          label="ImageUrl"
+          label="Image URL"
           variant="outlined"
-          name="imageUrl"
+          type="text"
           value={form.imageUrl}
-          onChange={handleChange}
-        />
-        
-        <Stack spacing={2}><br></br>
-          <Button variant="contained" type="submit">
-            Add Product
-          </Button>
-        </Stack>
+          onChange={(e) => setForm({ ...form, imageUrl: e.target.value })}
+        /><br />
+
+        <Button variant="contained" type="submit" style={{ backgroundColor: "green" }}>
+          ADD PRODUCT
+        </Button>
       </Box>
     </div>
   );
-};
+}
 
-export default Add; 
+export default Add;
+
+

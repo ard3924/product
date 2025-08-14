@@ -25,7 +25,7 @@ const Add = () => {
         navigate('/');
       })
       .catch((err) => {
-        console.error(err):
+        console.error(err);
         alert('Failed to add product');
       });
   }

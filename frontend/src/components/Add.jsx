@@ -18,7 +18,7 @@ const Add = () => {
   function submitform(e) {
     e.preventDefault();
 
-    axios.post('http://localhost:5000/route/add', form)
+    axios.post('http://localhost:5000/prod/add', form)
       .then((res) => {
         console.log('Product added:', res.data);
         alert('Product added successfully!');

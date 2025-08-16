@@ -7,10 +7,10 @@ import axios from 'axios';
 
 const Add = () => {
   const [form, setForm] = useState({
-    productTitle: '',
-    productDescription: '',
-    imageUrl: '',
-    status: ''
+    title: '',
+    description: '',
+    status: '',
+    imageurl: ''
   });
 
   const navigate = useNavigate();
@@ -22,6 +22,9 @@ const Add = () => {
       .then((res) => {
         console.log('Product added:', res.data);
         alert('Product added successfully!');
+        // reset form
+        setForm({ title: '', description: '', status: '', imageurl: '' });
+        // navigate back to home
         navigate('/');
       })
       .catch((err) => {
@@ -44,16 +47,16 @@ const Add = () => {
           label="Product Title"
           variant="outlined"
           type="text"
-          value={form.productTitle}
-          onChange={(e) => setForm({ ...form, productTitle: e.target.value })}
+          value={form.title}
+          onChange={(e) => setForm({ ...form, title: e.target.value })}
         /><br />
 
         <TextField
           label="Product Description"
           variant="outlined"
           type="text"
-          value={form.productDescription}
-          onChange={(e) => setForm({ ...form, productDescription: e.target.value })}
+          value={form.description}
+          onChange={(e) => setForm({ ...form, description: e.target.value })}
         /><br />
 
         <TextField
@@ -68,8 +71,8 @@ const Add = () => {
           label="Image URL"
           variant="outlined"
           type="text"
-          value={form.imageUrl}
-          onChange={(e) => setForm({ ...form, imageUrl: e.target.value })}
+          value={form.imageurl}
+          onChange={(e) => setForm({ ...form, imageurl: e.target.value })}
         /><br />
 
         <Button variant="contained" type="submit" style={{ backgroundColor: "green" }}>
@@ -81,5 +84,3 @@ const Add = () => {
 }
 
 export default Add;
-
-
